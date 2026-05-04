@@ -561,7 +561,7 @@
     align-items: center;
     background: var(--dark);
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 
   .about::before {
@@ -692,7 +692,7 @@
     text-align: center;
     position: relative;
     overflow: visible;
-    z-index: 3;
+    z-index: 5;
   }
 
   .contact::before {
@@ -711,7 +711,7 @@
   .contact-obj {
     position: absolute;
     pointer-events: none;
-    z-index: 10;
+    z-index: 30;
     filter: drop-shadow(0 12px 32px rgba(200,160,0,0.25));
   }
 
@@ -1212,6 +1212,396 @@
       max-width: 100%;
     }
   }
+
+  /* ===== CODE SECTION ===== */
+  .code-section {
+    background: var(--lime);
+    height: 100vh;
+    max-height: 800px;
+    display: grid;
+    grid-template-columns: 45% 55%;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  /* Floating decorative objects */
+  .code-obj {
+    position: absolute;
+    font-family: 'Bebas Neue', monospace;
+    font-weight: 700;
+    pointer-events: none;
+    z-index: 1;
+    color: rgba(0,0,0,0.12);
+    user-select: none;
+  }
+  .code-obj-bracket {
+    font-size: 120px;
+    top: 5%;
+    right: 52%;
+    letter-spacing: -10px;
+  }
+  .code-obj-slash {
+    font-size: 100px;
+    bottom: 10%;
+    left: 3%;
+    color: rgba(0,0,0,0.09);
+  }
+  .code-obj-semicolon {
+    font-size: 160px;
+    top: 50%;
+    left: 44%;
+    transform: translateY(-50%);
+    color: rgba(0,0,0,0.07);
+  }
+  .code-obj-arrow {
+    font-size: 80px;
+    top: 15%;
+    left: 5%;
+    color: rgba(0,0,0,0.1);
+  }
+  .code-obj-dot {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.18);
+    top: 20%;
+    right: 54%;
+  }
+  .code-obj-dot2 {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.13);
+    bottom: 25%;
+    left: 40%;
+  }
+
+  /* Left side */
+  .code-left {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 60px 20px 0;
+    z-index: 2;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .code-wireframe {
+    /* kontrol ukuran wireframe DESKTOP */
+    width: 100%;        /* lebar relatif terhadap container */
+    max-width: 500px;  /* batas maksimal lebar */
+    height: auto;
+    object-fit: contain;
+    object-position: bottom center;
+    display: block;
+    mix-blend-mode: multiply;
+    filter: contrast(1.1);
+    align-self: flex-end;
+  }
+
+  /* Floating label tags */
+  .code-tag {
+    position: absolute;
+    background: #0d0d0d;
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    z-index: 5;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.25);
+  }
+  .code-tag-cursor {
+    color: var(--lime);
+    animation: blink 0.75s step-end infinite;
+    margin-left: 2px;
+  }
+  .code-tag-top {
+    top: 22%;
+    right: 5%;
+    font-size: 24px;
+  }
+  .code-tag-mid {
+    top: 43%;
+    left: 16%;
+    font-size: 28px;
+  }
+  .code-tag-bot {
+    bottom: 25%;
+    right: 5%;
+    font-size: 22px;
+  }
+
+  /* Right side — dua kolom marquee */
+  .code-right {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    padding: 0;
+    gap: 10px;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .code-marquee-wrap {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+  }
+
+  /* Kolom kanan scroll lebih lambat & arah berlawanan */
+  .code-marquee-wrap:nth-child(2) .code-marquee-track {
+    animation: marqueeDown 18s linear infinite;
+  }
+
+  .code-marquee-track {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    animation: marqueeUp 14s linear infinite;
+    will-change: transform;
+  }
+
+  .code-marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  /* Card 1:1 dengan gambar */
+  .code-card {
+    background: #111;
+    border-radius: 20px;
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+  .code-card:hover {
+    transform: scale(1.02);
+  }
+
+  .code-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .code-card-label {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #000;
+    background: var(--lime);
+    padding: 3px 10px;
+    border-radius: 50px;
+  }
+
+  .code-card p {
+    display: none;
+  }
+
+  @keyframes marqueeUp {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-50%); }
+  }
+
+  @keyframes marqueeDown {
+    from { transform: translateY(-50%); }
+    to   { transform: translateY(0); }
+  }
+
+  @keyframes marqueeLeft {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  @keyframes marqueeRight2 {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+  }
+
+  /* ===== BACKGROUND SVG (back01 & back02) — DESKTOP ===== */
+  .code-big-left,
+  .code-big-right {
+    position: absolute;
+    pointer-events: none;
+    opacity: 1; /* opacity penuh */
+  }
+
+  /* back01.svg — DESKTOP */
+  .code-big-left {
+    /* kontrol posisi back */
+    top: 12%;       /* jarak dari bawah */
+    left: 140px;         /* jarak dari kiri */
+    width: 320px;    /* ukuran lebar */
+    height: auto;
+    z-index: 0;
+  }
+
+  /* back02.svg — DESKTOP */
+  .code-big-right {
+    /* kontrol posisi back */
+    bottom: 33%;       /* jarak dari bawah */
+    left: 27%;        /* jarak dari kanan */
+    width: 320px;    /* ukuran lebar */
+    height: auto;
+    z-index: 0;
+  }
+
+  /* Mobile code section */
+  @media (max-width: 900px) {
+    .code-section {
+      grid-template-columns: 1fr;
+      height: auto;
+      max-height: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      overflow: visible;
+    }
+
+    /* Marquee horizontal di ATAS — dengan margin-top untuk space kosong */
+    .code-right {
+      order: 1;
+      width: 100%;
+      height: auto;
+      padding: 0;
+      margin: 0;
+      margin-top: 32px;
+      gap: 6px;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Marquee-wrap horizontal, tanpa mask, tanpa padding */
+    .code-marquee-wrap {
+      width: 100%;
+      height: auto;
+      flex: none;
+      overflow: hidden;
+      -webkit-mask-image: none;
+      mask-image: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* Track jadi baris horizontal */
+    .code-marquee-track {
+      flex-direction: row !important;
+      width: max-content;
+      gap: 6px;
+      padding: 0;
+    }
+
+    /* Baris 1: kiri ke kanan */
+    .code-marquee-wrap:nth-child(1) .code-marquee-track {
+      animation: marqueeLeft 12s linear infinite;
+    }
+
+    /* Baris 2: kanan ke kiri */
+    .code-marquee-wrap:nth-child(2) .code-marquee-track {
+      animation: marqueeRight2 15s linear infinite;
+    }
+
+    /* Kartu 1:1 — perbesar di mobile */
+    .code-card {
+      width: 48vw;       /* kontrol ukuran card marquee mobile */
+      max-width: 210px;  /* batas maksimal */
+      aspect-ratio: 1 / 1;
+      flex-shrink: 0;
+      border-radius: 0;
+    }
+
+    /* Wireframe di BAWAH — overflow visible, z-index RENDAH agar gold objects bisa di depan */
+    .code-left {
+      order: 2;
+      width: 100%;
+      height: 75vw;
+      min-height: 300px;
+      max-height: 480px;
+      padding: 0;
+      overflow: visible;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      z-index: 4;
+      margin-top: -60px; /* kontrol posisi naik/turun wireframe ke marquee — lebih negatif = lebih naik */
+    }
+
+    .code-wireframe {
+      /* kontrol ukuran wireframe MOBILE */
+      width: 80%;        /* lebar relatif terhadap container */
+      max-width: 380px;  /* batas maksimal lebar */
+      position: relative;
+      z-index: 5;
+      filter: contrast(1.1);
+    }
+
+    /* Tags tetap di atas wireframe */
+    .code-tag {
+      font-size: 13px;
+      padding: 6px 14px;
+      z-index: 8;
+    }
+    .code-tag-top { font-size: 16px; top: -45%; right: 4%; }
+    .code-tag-mid { font-size: 16px; top: 44%; left: 6%; }
+    .code-tag-bot { font-size: 16px; bottom: 10%; right: 4%; }
+
+    .code-obj-bracket { font-size: 60px; top: 2%; right: 2%; }
+    .code-obj-slash { font-size: 50px; bottom: 5%; left: 2%; }
+    .code-obj-semicolon { display: none; }
+    .code-obj-arrow { font-size: 50px; top: 5%; left: 3%; }
+
+    /* Mobile: code-section overflow visible agar back SVG tidak terpotong */
+    .code-section {
+      overflow: visible;
+    }
+
+    /* Mobile: gold contact objects harus sangat tinggi z-index */
+    .contact-obj {
+      z-index: 50 !important;
+    }
+
+    /* Back SVG mobile */
+
+    /* back01.svg — MOBILE (di DEPAN wireframe) */
+    .code-big-left {
+      /* kontrol posisi back */
+      top: 80%;        /* jarak dari bawah */
+      left: 6%;          /* jarak dari kiri */
+      width: 40vw;      /* ukuran lebar */
+      height: auto;
+      opacity: 1;
+      z-index: 13;      /* di DEPAN wireframe (z-index: 5) */
+    }
+
+    /* back02.svg — MOBILE (di belakang wireframe) */
+    .code-big-right {
+      /* kontrol posisi back */
+      bottom: 11%;        /* jarak dari bawah */
+      right: 0;         /* jarak dari kanan */
+      left: auto;
+      width: 40vw;      /* ukuran lebar */
+      height: auto;
+      opacity: 1;
+      z-index: 1;       /* di belakang wireframe */
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -1541,6 +1931,87 @@
   </div>
 </section>
 
+
+<!-- CODE SECTION -->
+<section class="code-section" id="code">
+
+  <!-- Decorative floating objects -->
+  <div class="code-obj code-obj-bracket">{  }</div>
+  <div class="code-obj code-obj-slash">//</div>
+  <div class="code-obj code-obj-dot"></div>
+  <div class="code-obj code-obj-dot2"></div>
+  <div class="code-obj code-obj-semicolon">;</div>
+  <div class="code-obj code-obj-arrow">&rarr;</div>
+
+  <!-- Background SVG kiri bawah (back01) -->
+  <img src="images/back01.svg" class="code-big-left code-back01" alt="">
+
+  <!-- Background SVG kanan bawah (back02) -->
+  <img src="images/back02.svg" class="code-big-right code-back02" alt="">
+
+  <!-- Left: wireframe figure + floating tags -->
+  <div class="code-left reveal reveal-left">
+    <img src="images/wireframe.webp" class="code-wireframe" alt="Wireframe figure">
+    <div class="code-tag code-tag-top">
+      <span class="code-tag-text" id="typed-portfolio">My Portfolio</span><span class="code-tag-cursor">_</span>
+    </div>
+    <div class="code-tag code-tag-mid">
+      <span class="code-tag-text" id="typed-code">Code</span><span class="code-tag-cursor">_</span>
+    </div>
+    <div class="code-tag code-tag-bot">
+      <span class="code-tag-text" id="typed-apps">Building Apps</span><span class="code-tag-cursor">_</span>
+    </div>
+  </div>
+
+  <!-- Right: dua kolom marquee 1:1 dengan gambar -->
+  <div class="code-right">
+
+    <!-- Kolom kiri: scroll bawah ke atas (desktop) / kiri ke kanan (mobile) -->
+    <div class="code-marquee-wrap">
+      <div class="code-marquee-track">
+        <div class="code-card"><img src="images/code01.webp" alt=""><span class="code-card-label">Project</span></div>
+        <div class="code-card"><img src="images/code02.webp" alt=""><span class="code-card-label">Web</span></div>
+        <div class="code-card"><img src="images/code03.webp" alt=""><span class="code-card-label">Mobile</span></div>
+        <div class="code-card"><img src="images/code04.webp" alt=""><span class="code-card-label">UI/UX</span></div>
+        <div class="code-card"><img src="images/code05.webp" alt=""><span class="code-card-label">App</span></div>
+        <div class="code-card"><img src="images/code01.webp" alt=""><span class="code-card-label">Project</span></div>
+        <div class="code-card"><img src="images/code02.webp" alt=""><span class="code-card-label">Web</span></div>
+        <div class="code-card"><img src="images/code03.webp" alt=""><span class="code-card-label">Mobile</span></div>
+        <div class="code-card"><img src="images/code04.webp" alt=""><span class="code-card-label">UI/UX</span></div>
+        <div class="code-card"><img src="images/code05.webp" alt=""><span class="code-card-label">App</span></div>
+        <div class="code-card"><img src="images/code01.webp" alt=""><span class="code-card-label">Project</span></div>
+        <div class="code-card"><img src="images/code02.webp" alt=""><span class="code-card-label">Web</span></div>
+        <div class="code-card"><img src="images/code03.webp" alt=""><span class="code-card-label">Mobile</span></div>
+        <div class="code-card"><img src="images/code04.webp" alt=""><span class="code-card-label">UI/UX</span></div>
+        <div class="code-card"><img src="images/code05.webp" alt=""><span class="code-card-label">App</span></div>
+      </div>
+    </div>
+
+    <!-- Kolom kanan: scroll atas ke bawah (desktop) / kanan ke kiri (mobile) -->
+    <div class="code-marquee-wrap">
+      <div class="code-marquee-track">
+        <div class="code-card"><img src="images/code03.webp" alt=""><span class="code-card-label">Mobile</span></div>
+        <div class="code-card"><img src="images/code04.webp" alt=""><span class="code-card-label">UI/UX</span></div>
+        <div class="code-card"><img src="images/code05.webp" alt=""><span class="code-card-label">App</span></div>
+        <div class="code-card"><img src="images/code01.webp" alt=""><span class="code-card-label">Project</span></div>
+        <div class="code-card"><img src="images/code02.webp" alt=""><span class="code-card-label">Web</span></div>
+        <div class="code-card"><img src="images/code03.webp" alt=""><span class="code-card-label">Mobile</span></div>
+        <div class="code-card"><img src="images/code04.webp" alt=""><span class="code-card-label">UI/UX</span></div>
+        <div class="code-card"><img src="images/code05.webp" alt=""><span class="code-card-label">App</span></div>
+        <div class="code-card"><img src="images/code01.webp" alt=""><span class="code-card-label">Project</span></div>
+        <div class="code-card"><img src="images/code02.webp" alt=""><span class="code-card-label">Web</span></div>
+        <div class="code-card"><img src="images/code03.webp" alt=""><span class="code-card-label">Mobile</span></div>
+        <div class="code-card"><img src="images/code04.webp" alt=""><span class="code-card-label">UI/UX</span></div>
+        <div class="code-card"><img src="images/code05.webp" alt=""><span class="code-card-label">App</span></div>
+        <div class="code-card"><img src="images/code01.webp" alt=""><span class="code-card-label">Project</span></div>
+        <div class="code-card"><img src="images/code02.webp" alt=""><span class="code-card-label">Web</span></div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
 <!-- CONTACT -->
 <section class="contact" id="contact">
 
@@ -1721,6 +2192,38 @@
   }, { threshold: 0.3 });
 
   skillFills.forEach(el => skillObserver.observe(el));
+
+  // ===== CODE SECTION TYPING =====
+  function makeTyper(elId, words, speed=90, deleteSpeed=55, pause=2000) {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    let wi = 0, ci = 0, deleting = false;
+    function tick() {
+      const word = words[wi];
+      if (!deleting) {
+        el.textContent = word.substring(0, ci + 1);
+        ci++;
+        if (ci === word.length) {
+          setTimeout(() => { deleting = true; tick(); }, pause);
+          return;
+        }
+      } else {
+        el.textContent = word.substring(0, ci - 1);
+        ci--;
+        if (ci === 0) {
+          deleting = false;
+          wi = (wi + 1) % words.length;
+        }
+      }
+      setTimeout(tick, deleting ? deleteSpeed : speed);
+    }
+    setTimeout(tick, 800 + Math.random() * 400);
+  }
+
+  makeTyper('typed-portfolio', ['My Portfolio', 'My Personal Project']);
+  makeTyper('typed-code',      ['Code', 'HTML+CSS', 'Flutter', 'Javascript']);
+  makeTyper('typed-apps',      ['Building Apps', 'Building Website']);
+
 </script>
 </body>
 </html>
