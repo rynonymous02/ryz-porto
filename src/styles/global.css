@@ -1073,11 +1073,11 @@ footer p {
 
 @keyframes marqueeLeft {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 
   to {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
@@ -1610,19 +1610,26 @@ footer p {
 
 /* Kolom kanan scroll lebih lambat & arah berlawanan */
 .code-marquee-wrap:nth-child(2) .code-marquee-track {
-  animation: marqueeDown 18s linear infinite;
+  animation: marqueeDown 20s linear infinite;
 }
 
 .code-marquee-track {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  animation: marqueeUp 14s linear infinite;
+  animation: marqueeUp 16s linear infinite;
   will-change: transform;
 }
 
 .code-marquee-track:hover {
   animation-play-state: paused;
+}
+
+.code-marquee-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 10px;
+  flex-shrink: 0;
 }
 
 /* Card 1:1 dengan gambar */
@@ -1667,31 +1674,31 @@ footer p {
 
 @keyframes marqueeUp {
   from {
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 
   to {
-    transform: translateY(-50%);
+    transform: translate3d(0, -50%, 0);
   }
 }
 
 @keyframes marqueeDown {
   from {
-    transform: translateY(-50%);
+    transform: translate3d(0, -50%, 0);
   }
 
   to {
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes marqueeRight2 {
   from {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 
   to {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -1762,18 +1769,27 @@ footer p {
   .code-marquee-track {
     flex-direction: row !important;
     width: max-content;
-    gap: 6px;
+    gap: 0;
     padding: 0;
+  }
+
+  .code-marquee-group {
+    flex-direction: row !important;
+    display: flex;
+    gap: 6px;
+    padding-right: 6px;
+    padding-bottom: 0;
+    flex-shrink: 0;
   }
 
   /* Baris 1: kiri ke kanan */
   .code-marquee-wrap:nth-child(1) .code-marquee-track {
-    animation: marqueeLeft 12s linear infinite;
+    animation: marqueeLeft 14s linear infinite;
   }
 
   /* Baris 2: kanan ke kiri */
   .code-marquee-wrap:nth-child(2) .code-marquee-track {
-    animation: marqueeRight2 15s linear infinite;
+    animation: marqueeRight2 18s linear infinite;
   }
 
   /* Kartu 1:1 — perbesar di mobile */
