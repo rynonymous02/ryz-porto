@@ -41,6 +41,7 @@ import Footer from '../components/Footer.astro';
 
   <script is:inline>
     // ===== NAVBAR =====
+    const navEl = document.querySelector('nav');
     const navMap = {
       'home': document.getElementById('nav-home'),
       'about': document.getElementById('nav-about'),
@@ -54,6 +55,22 @@ import Footer from '../components/Footer.astro';
 
     setActive('home');
 
+    function updateNavTheme() {
+      if (!navEl) return;
+      const startEl = document.querySelector('.skills-bar') || document.getElementById('portfolio');
+      const endEl = document.querySelector('.stats-bar') || document.getElementById('portfolio');
+      if (!startEl || !endEl) return;
+
+      const navRect = navEl.getBoundingClientRect();
+      const startRect = startEl.getBoundingClientRect();
+      const endRect = endEl.getBoundingClientRect();
+
+      const isOverLime = navRect.bottom > startRect.top && navRect.top < endRect.bottom;
+      navEl.classList.toggle('nav-dark', isOverLime);
+    }
+
+    updateNavTheme();
+
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY + 140;
       const ids = ['contact', 'about', 'home'];
@@ -61,7 +78,10 @@ import Footer from '../components/Footer.astro';
         const el = document.getElementById(id);
         if (el && scrollY >= el.offsetTop) { setActive(id); break; }
       }
-    });
+      updateNavTheme();
+    }, { passive: true });
+
+    window.addEventListener('resize', updateNavTheme);
 
     // ===== GALLERY TRACK =====
     const track = document.getElementById('galleryTrack');
