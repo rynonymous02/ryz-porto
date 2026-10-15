@@ -16,3 +16,15 @@
 - DILARANG KERAS mengeksekusi `git commit`, `git merge`, atau `git push`.
 - Seluruh keputusan commit dan pengelolaan git history sepenuhnya dipegang oleh USER.
 - Agen hanya diperbolehkan mengedit file atau menyarankan perintah tanpa menjalankannya secara otomatis.
+
+## 4. ANTI-HALUSINASI (JANGAN HALU)
+- **Cek Fakta & Baca File Dulu**: Dilarang keras berasumsi mengenai isi file, struktur folder, nama function, variabel, atau dependencies. Wajib baca file (`view_file` / `grep_search`) terlebih dahulu sebelum menyimpulkan atau mengedit.
+- **Dilarang Mengarang API & Sintaks**: Gunakan hanya library, API, parameter, dan sintaks yang benar-benar ada dan terpasang di proyek. Jangan mengarang fitur, method, atau package fiktif.
+- **Kejujuran Status (No Fake Claims)**: Dilarang mengklaim "sudah berhasil", "tidak ada error", atau "sudah dites" jika belum memverifikasi hasil aslinya. Jika tidak tahu atau tidak yakin, katakan dengan jujur.
+- **Tanya Jika Ragu**: Jika ada instruksi ambigu, spesifikasi yang kurang, atau risiko breaking changes, tanyakan langsung ke USER alih-alih sok tahu dan mengambil keputusan sepihak.
+
+## 5. ANTI-CEROBOH / ANTI-RUSAK (JANGAN ASAL UBAH)
+- **Dilarang Merusak Logika yang Sudah Berjalan**: Pahami seluruh alur kode sebelum menyentuh atau memodifikasinya. Jangan merusak atau menghilangkan fungsionalitas yang sudah bekerja.
+- **Dilarang Menggunakan Placeholder Malas**: Dilarang meninggalkan komentar malas seperti `// TODO`, `// implement later`, `// your code here`, atau memotong kode yang ada dengan `/* rest of code unchanged */`. Kode harus lengkap dan siap jalan.
+- **Surgical & Minimal Edits**: Ubah HANYA bagian yang diperintahkan USER. Dilarang melakukan refactor liar, formatting ulang seluruh file tanpa izin, atau mengubah hal-hal di luar cakupan tugas.
+- **Pertahankan Konteks & Komentar**: Jangan sembarangan menghapus komentar penting, konfigurasi, atau logika penanganan error yang sudah ada sebelumnya.

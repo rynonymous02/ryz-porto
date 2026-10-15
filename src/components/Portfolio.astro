@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+
+const portfolioItems = await getCollection('portfolio');
+portfolioItems.sort((a, b) => a.data.order - b.data.order);
+---
+
+<section class="portfolio" id="portfolio">
+  <div class="portfolio-header reveal">
+    <p class="section-label">Selected Works</p>
+    <h2>My Design <em>Portfolio</em></h2>
+  </div>
+
+  <div class="gallery-scroll-wrap">
+    <div class="gallery-track" id="galleryTrack">
+
+      <!-- Set 1 -->
+      <div class="gallery-group">
+        {portfolioItems.map((item) => (
+          <div
+            class={`gallery-card ${item.data.ratio} ${item.data.gradientClass || ''}`}
+            onclick={`window.location.href='/portfolio/${item.id}'`}
+          >
+            <div class="card-cat">{item.data.category}</div>
+            <div class="gallery-card-inner">
+              <div class="card-placeholder">
+                <img src={item.data.image} alt={item.data.alt || item.data.title} />
+              </div>
+              <span class="card-label">{item.data.label}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Set 2 (exact duplicate for seamless loop) -->
+      <div class="gallery-group" aria-hidden="true">
+        {portfolioItems.map((item) => (
+          <div
+            class={`gallery-card ${item.data.ratio} ${item.data.gradientClass || ''}`}
+            onclick={`window.location.href='/portfolio/${item.id}'`}
+          >
+            <div class="card-cat">{item.data.category}</div>
+            <div class="gallery-card-inner">
+              <div class="card-placeholder">
+                <img src={item.data.image} alt={item.data.alt || item.data.title} />
+              </div>
+              <span class="card-label">{item.data.label}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,222 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import SkillsMarquee from '../components/SkillsMarquee.astro';
+import Portfolio from '../components/Portfolio.astro';
+import StatsBar from '../components/StatsBar.astro';
+import About from '../components/About.astro';
+import CodeSection from '../components/CodeSection.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+  <!-- NAVBAR -->
+  <Navbar />
+
+  <!-- HERO -->
+  <Hero />
+
+  <!-- SKILLS MARQUEE -->
+  <SkillsMarquee />
+
+  <!-- PORTFOLIO -->
+  <Portfolio />
+
+  <!-- STATS BAR -->
+  <StatsBar />
+
+  <!-- ABOUT -->
+  <About />
+
+  <!-- CODE SECTION -->
+  <CodeSection />
+
+  <!-- CONTACT -->
+  <Contact />
+
+  <!-- FOOTER -->
+  <Footer />
+
+  <script is:inline>
+    // ===== NAVBAR =====
+    const navMap = {
+      'home': document.getElementById('nav-home'),
+      'about': document.getElementById('nav-about'),
+      'contact': document.getElementById('nav-contact'),
+    };
+
+    function setActive(id) {
+      Object.values(navMap).forEach(a => a && a.classList.remove('active'));
+      if (navMap[id]) navMap[id].classList.add('active');
+    }
+
+    setActive('home');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY + 140;
+      const ids = ['contact', 'about', 'home'];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && scrollY >= el.offsetTop) { setActive(id); break; }
+      }
+    });
+
+    // ===== GALLERY TRACK =====
+    const track = document.getElementById('galleryTrack');
+    function updateGallerySpeed() {
+      if (!track) return;
+      const group = track.querySelector('.gallery-group');
+      if (group) {
+        const groupW = group.offsetWidth;
+        const speed = 75; // constant px/sec speed
+        track.style.animationDuration = (groupW / speed) + 's';
+      }
+    }
+    updateGallerySpeed();
+    window.addEventListener('resize', updateGallerySpeed);
+
+    // ===== TYPING ANIMATION =====
+    const roles = ['Graphic Designer', 'UI UX Design', 'Front-End Developer', 'Freelance'];
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typedEl = document.getElementById('typed-role');
+
+    function typeRole() {
+      if (!typedEl) return;
+      const currentRole = roles[roleIndex];
+
+      if (!isDeleting) {
+        typedEl.textContent = currentRole.substring(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === currentRole.length) {
+          // Pause at full word then start deleting
+          setTimeout(() => { isDeleting = true; typeRole(); }, 1800);
+          return;
+        }
+      } else {
+        typedEl.textContent = currentRole.substring(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) {
+          isDeleting = false;
+          roleIndex = (roleIndex + 1) % roles.length;
+        }
+      }
+
+      const speed = isDeleting ? 60 : 100;
+      setTimeout(typeRole, speed);
+    }
+
+    // Start after hero animation delay
+    setTimeout(typeRole, 1200);
+
+    // ===== SCROLL REVEAL =====
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // ===== STAT COUNTER ANIMATION =====
+    const statEls = document.querySelectorAll('.stat-count');
+
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1800;
+      const startTime = performance.now();
+
+      function update(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(eased * target);
+        el.textContent = current + suffix;
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Small delay so it starts after badge reveal animation
+          setTimeout(() => animateCounter(entry.target), 400);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    statEls.forEach(el => counterObserver.observe(el));
+
+    // ===== SKILL BAR ANIMATION =====
+    const skillFills = document.querySelectorAll('.skill-fill');
+
+    const skillObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const fill = entry.target;
+          const pctEl = fill.closest('.skill-item').querySelector('.skill-pct');
+          const targetWidth = parseInt(fill.dataset.width);
+          const duration = 1400;
+          const startTime = performance.now();
+
+          function animate(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.floor(eased * targetWidth);
+            fill.style.width = current + '%';
+            if (pctEl) pctEl.textContent = current + '%';
+            if (progress < 1) requestAnimationFrame(animate);
+          }
+          requestAnimationFrame(animate);
+          skillObserver.unobserve(fill);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    skillFills.forEach(el => skillObserver.observe(el));
+
+    // ===== CODE SECTION TYPING =====
+    function makeTyper(elId, words, speed = 90, deleteSpeed = 55, pause = 2000) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      let wi = 0, ci = 0, deleting = false;
+      function tick() {
+        const word = words[wi];
+        if (!deleting) {
+          el.textContent = word.substring(0, ci + 1);
+          ci++;
+          if (ci === word.length) {
+            setTimeout(() => { deleting = true; tick(); }, pause);
+            return;
+          }
+        } else {
+          el.textContent = word.substring(0, ci - 1);
+          ci--;
+          if (ci === 0) {
+            deleting = false;
+            wi = (wi + 1) % words.length;
+          }
+        }
+        setTimeout(tick, deleting ? deleteSpeed : speed);
+      }
+      setTimeout(tick, 800 + Math.random() * 400);
+    }
+
+    makeTyper('typed-portfolio', ['My Portfolio', 'My Personal Project']);
+    makeTyper('typed-code', ['Code', 'HTML+CSS', 'Flutter', 'Javascript']);
+    makeTyper('typed-apps', ['Building Apps', 'Building Website']);
+  </script>
+</Layout>
