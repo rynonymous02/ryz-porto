@@ -1642,6 +1642,7 @@ footer p {
   overflow: hidden;
   position: relative;
   transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
 .code-card:hover {

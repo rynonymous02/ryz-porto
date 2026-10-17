@@ -1,0 +1,66 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const code = await getCollection('code');
+  return code.map((item) => ({
+    params: { id: item.id },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props;
+const { Content } = await render(item);
+---
+
+<Layout title={`${item.data.title} — Muhammad Rizal`}>
+  <Navbar />
+
+  <main style="padding: 140px 8% 100px; max-width: 1000px; margin: 0 auto; min-height: 80vh;">
+    <a href="/#code" style="display: inline-flex; align-items: center; gap: 8px; color: var(--lime); text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 32px; transition: transform 0.2s ease;">
+      &larr; Back to Code
+    </a>
+
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+      <span style="background: var(--lime); color: #000; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.08em;">
+        {item.data.category}
+      </span>
+      {item.data.year && (
+        <span style="color: var(--muted); font-size: 13px;">{item.data.year}</span>
+      )}
+    </div>
+
+    <h1 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 5vw, 64px); color: var(--lime); letter-spacing: 0.02em; line-height: 1.1; margin-bottom: 24px;">
+      {item.data.title}
+    </h1>
+
+    {item.data.client && (
+      <p style="color: var(--muted); font-size: 14px; margin-bottom: 24px;">
+        <strong>Project Type:</strong> {item.data.client}
+      </p>
+    )}
+
+    {item.data.tools && item.data.tools.length > 0 && (
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;">
+        {item.data.tools.map((tool: string) => (
+          <span style="background: var(--dark2); border: 1px solid rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 6px; font-size: 12px; color: var(--text);">
+            {tool}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <div style="background: var(--dark2); border-radius: 16px; overflow: hidden; margin-bottom: 48px; border: 1px solid rgba(255,255,255,0.08); text-align: center;">
+      <img src={item.data.image} alt={item.data.title} style="width: 100%; max-height: 70vh; object-fit: contain; display: block; margin: 0 auto;" />
+    </div>
+
+    <article style="background: var(--dark2); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 36px 32px; line-height: 1.8; font-size: 15px; color: var(--text);">
+      <Content />
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

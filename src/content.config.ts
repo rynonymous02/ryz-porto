@@ -19,4 +19,20 @@ const portfolio = defineCollection({
   }),
 });
 
-export const collections = { portfolio };
+const code = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/code" }),
+  schema: z.object({
+    title: z.string(),
+    category: z.string(),
+    image: z.string(),
+    order: z.number(),
+    description: z.string().optional(),
+    tools: z.array(z.string()).optional(),
+    year: z.string().optional(),
+    client: z.string().optional(),
+    demoUrl: z.string().optional(),
+    githubUrl: z.string().optional(),
+  }),
+});
+
+export const collections = { portfolio, code };
