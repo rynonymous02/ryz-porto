@@ -513,6 +513,7 @@ nav a.active {
   border-radius: 50px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  z-index: 2;
 }
 
 .card-placeholder {
